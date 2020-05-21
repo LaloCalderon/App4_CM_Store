@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ejercicio3CM</string>
+    <string name="url_base">https://www.serverbpw.com/cm/2020-2/products.php</string>
+</resources>
