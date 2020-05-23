@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -21,7 +22,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements Response.ErrorListener, Response.Listener<JSONArray> {
-
     ListView lv;
     ProgressBar pb;
     int alto, ancho;
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements Response.ErrorLis
         //Generar conexión:
 
         queue= Volley.newRequestQueue(this);
-        url=getResources().getString( R.string.url_base);
+        url=getResources().getString(R.string.url_base);
         request=new JsonArrayRequest(Request.Method.GET,url,null,this,this);
         queue.add(request);
     }
@@ -56,7 +56,6 @@ public class MainActivity extends AppCompatActivity implements Response.ErrorLis
     public void onErrorResponse(VolleyError error) {
         pb.setVisibility(View.GONE);
         finish();
-
     }
 
     @Override
@@ -68,23 +67,28 @@ public class MainActivity extends AppCompatActivity implements Response.ErrorLis
             for(int i=0;i<response.length();i++){
 
                 jsonObject=response.getJSONObject(i);
-                int id=jsonObject.getInt("id");
+
+                int ide=jsonObject.getInt("id");
                 double price=jsonObject.getDouble("price");
                 double delivery=jsonObject.getDouble("delivery");
                 String tumb=jsonObject.getString("thumbnail_url");
                 String name=jsonObject.getString("name");
                 String provider=jsonObject.getString("provider");
-                producto product =new producto(id, tumb, name, provider, price,delivery);
+                producto product =new producto(ide, tumb, name, provider, price,delivery);
                 productos.add(product);
             }
-
             Adaptador adaptador = new Adaptador(this, productos, ancho, alto);
             lv.setAdapter(adaptador);
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    //Recuperar variable IDE del objeto, no declarada en un TV
+                    //int ide=pruduct.getIde();
+                    Bundle bundle = new Bundle();
+                    //Mandar a segundo activity
+                    //bundle.putInt("id",ide);
                     Intent intent= new Intent(MainActivity.this, Main2Activity.class);
-                    intent.putExtra("ID", id);
+                    intent.putExtras(bundle);
                     startActivity(intent);
                 }
             });

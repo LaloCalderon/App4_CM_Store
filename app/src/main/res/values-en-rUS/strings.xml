@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ejercicio3CM</string>
     <string name="url_base">https://www.serverbpw.com/cm/2020-2/products.php</string>
-    <string name="bad">Algo anda mal, revisa tu conexión.</string>
+    <string name="bad">Something went wrong, check your connection.</string>
 </resources>
