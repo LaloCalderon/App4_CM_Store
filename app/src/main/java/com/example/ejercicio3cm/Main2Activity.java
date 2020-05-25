@@ -4,7 +4,9 @@ import com.android.volley.Response;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -26,9 +28,12 @@ public class Main2Activity extends AppCompatActivity {
     ImageView ivprod;
     TextView tvdata, tvname;
     ProgressBar pb;
-    String url;
+    String url, datos, descripcion, nombre;
     RequestQueue queue;
     JsonObjectRequest request;
+    SharedPreferences sp;
+    SharedPreferences.Editor editor;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,15 +43,16 @@ public class Main2Activity extends AppCompatActivity {
         pb=findViewById(R.id.pb);
         tvdata=findViewById(R.id.tvdata);
         tvname=findViewById(R.id.tvname);
-
+        sp=getPreferences(Context.MODE_PRIVATE);
+        editor=sp.edit();
+        tvdata.setMovementMethod(new ScrollingMovementMethod());
         Bundle bundle=new Bundle();
         bundle=getIntent().getExtras();
         //Recupera valor de ide para adjuntar al link
-        int ide=bundle.getInt("id");
-
+        long ide=bundle.getLong("id");
+        //Toast.makeText(Main2Activity.this,"ide: "+ide ,Toast.LENGTH_SHORT).show();
         queue= Volley.newRequestQueue(this);
-        url=getResources().getString(R.string.url_base)+ide;
-
+        url=getResources().getString(R.string.link_prod)+ide;
         final JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.POST, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -56,8 +62,11 @@ public class Main2Activity extends AppCompatActivity {
                         try{
                             tvname.setText(response.getString("name"));
                             tvdata.setText(response.getString("desc"));
+                            nombre=response.getString("name");
+                            descripcion=response.getString("desc");
                             String data=response.getString("imag_url");
-
+                            datos=data;
+                            guardaobjeto(datos,descripcion,nombre);
                             Picasso.with(contexto)
                                     .load(data)
                                     .into(ivprod);
@@ -72,5 +81,11 @@ public class Main2Activity extends AppCompatActivity {
             }
         });
         MySinglet.getInstance(Main2Activity.this).addToRequest(jsonObjectRequest);
+    }
+    public void guardaobjeto(String datos, String descripcion, String nombre){
+        editor.putString("imagen", datos);
+        editor.putString("descripcion",descripcion);
+        editor.putString("nombre",nombre);
+        editor.commit();
     }
 }

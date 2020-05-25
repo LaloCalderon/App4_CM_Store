@@ -10,11 +10,9 @@
         android:id="@+id/ivprod"
         android:layout_width="157dp"
         android:layout_height="139dp"
-        app:layout_constraintBottom_toTopOf="@+id/pb"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.645" />
+        app:layout_constraintTop_toBottomOf="@+id/tvname" />
 
     <ProgressBar
         android:id="@+id/pb"
@@ -30,24 +28,24 @@
         android:id="@+id/tvname"
         android:layout_width="337dp"
         android:layout_height="56dp"
+        android:layout_marginTop="4dp"
         android:textColor="#CF0F0F"
         android:textSize="18sp"
         android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@+id/ivprod"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvdata"
-        android:layout_width="374dp"
-        android:layout_height="371dp"
+        android:layout_width="337dp"
+        android:layout_height="396dp"
+        android:layout_marginBottom="36dp"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.432"
+        app:layout_constraintHorizontal_bias="0.635"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.844" />
+        app:layout_constraintTop_toBottomOf="@+id/ivprod"
+        app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

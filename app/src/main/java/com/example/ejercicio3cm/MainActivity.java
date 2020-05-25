@@ -1,6 +1,7 @@
 package com.example.ejercicio3cm;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
@@ -39,14 +40,12 @@ public class MainActivity extends AppCompatActivity implements Response.ErrorLis
 
         ancho=size.x;
         alto=size.y;
-
         lv=findViewById(R.id.lv);
         pb=findViewById(R.id.pb);
         productos=new ArrayList<producto>();
         //Generar conexión:
-
-        queue= Volley.newRequestQueue(this);
         url=getResources().getString(R.string.url_base);
+        queue= Volley.newRequestQueue(this);
         request=new JsonArrayRequest(Request.Method.GET,url,null,this,this);
         queue.add(request);
     }
@@ -86,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements Response.ErrorLis
                     //int ide=pruduct.getIde();
                     Bundle bundle = new Bundle();
                     //Mandar a segundo activity
-                    //bundle.putInt("id",ide);
+                    bundle.putLong("id",id);
                     Intent intent= new Intent(MainActivity.this, Main2Activity.class);
                     intent.putExtras(bundle);
                     startActivity(intent);
